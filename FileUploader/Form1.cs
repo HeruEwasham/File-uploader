@@ -30,8 +30,8 @@ namespace FileUploader
             dialog.CheckFileExists = false;
             dialog.CheckPathExists = true;
             dialog.Multiselect = true;
-            dialog.FileName = "Must set default";
-
+            dialog.FileName = "";
+            
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 foreach (string filename in dialog.FileNames)
