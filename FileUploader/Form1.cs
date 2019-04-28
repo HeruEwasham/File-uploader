@@ -39,6 +39,7 @@ namespace FileUploader
                     filesListbox.Items.Add(filename);
                 }
             }
+            convertionCounterLabel.Text = "Files converted: 0/" + filesListbox.Items.Count;
         }
 
         private void StartButton_Click(object sender, EventArgs e)
@@ -60,8 +61,10 @@ namespace FileUploader
                         userTextBox.Enabled = false;
                         destinationTextBox.Enabled = false;
                         filesListbox.Enabled = false;
+                        convertionCounterLabel.Text = "Files converted: 0/" + filesListbox.Items.Count;
 
                         String output = "";
+                        int filesConverted = 0;
                         foreach (string filename in filesListbox.Items)
                         {
                             String args = "-r ";
@@ -93,10 +96,14 @@ namespace FileUploader
                             {
                                 string line = proc.StandardOutput.ReadLine();
                                 outputTextBox.Text = output + line;
+                                outputTextBox.SelectionStart = outputTextBox.TextLength;
+                                outputTextBox.ScrollToCaret();
                                 Application.DoEvents();
                             }
                             outputTextBox.AppendText(Environment.NewLine);
                             output += outputTextBox.Text;
+                            filesConverted++;
+                            convertionCounterLabel.Text = "Files converted: " + filesConverted + "/" + filesListbox.Items.Count;
                         }
                         filesListbox.Items.Clear();
                         startButton.Enabled = true;
